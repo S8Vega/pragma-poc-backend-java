@@ -11,25 +11,35 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "city")
-public class CityEntity implements Serializable {
+@Table(name = "cliente")
+public class ClienteEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NonNull
-    private String name;
-    @OneToMany(mappedBy = "cityBirth", fetch = FetchType.LAZY)
-    private List<CustomerEntity> customers;
+    private String nombres;
+    @NonNull
+    private String apellidos;
+    @OneToOne(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private IdentificacionEntity identificacion;
+    @NonNull
+    private Integer edad;
+    @ManyToOne
+    @JoinColumn(name = "ciudad_id")
+    private CiudadEntity ciudadDeNacimiento;
+    @OneToOne(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private FotoEntity foto;
 }

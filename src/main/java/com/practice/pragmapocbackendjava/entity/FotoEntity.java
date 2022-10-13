@@ -19,16 +19,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "identificacion")
-public class IdentificacionEntidad implements Serializable {
+@Table(name = "foto")
+public class FotoEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String tipo;
-    private String numero;
+    private String base64;
     @OneToOne
-    @JoinColumn(name = "cliente_id", unique = true)
-    private CustomerEntity customerEntity;
+    @JoinColumn(name = "cliente_id")
+    private ClienteEntity cliente;
 }

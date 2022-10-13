@@ -42,4 +42,14 @@ public class ClienteEntity implements Serializable {
     private CiudadEntity ciudadDeNacimiento;
     @OneToOne(mappedBy = "cliente", fetch = FetchType.LAZY)
     private FotoEntity foto;
+
+    public static class Atributos {
+        public static final String ID = "id";
+        public static final String NOMBRES = "nombres";
+        public static final String APELLIDOS = "apellidos";
+        public static final String IDENTIFICACION = "identificacion";
+        public static final String EDAD = "edad";
+        public static final String CIUDAD_DE_NACIMIENTO = "ciudadDeNacimiento";
+        public static final String FOTO = "foto";
+    }
 }

@@ -31,4 +31,11 @@ public class IdentificacionEntity implements Serializable {
     @OneToOne
     @JoinColumn(name = "cliente_id", unique = true)
     private ClienteEntity cliente;
+
+    public static class Atributos {
+        public static final String ID = "id";
+        public static final String TIPO = "tipo";
+        public static final String NUMERO = "numero";
+        public static final String CLIENTE = "cliente";
+    }
 }

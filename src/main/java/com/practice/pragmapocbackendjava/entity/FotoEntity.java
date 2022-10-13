@@ -30,4 +30,10 @@ public class FotoEntity implements Serializable {
     @OneToOne
     @JoinColumn(name = "cliente_id")
     private ClienteEntity cliente;
+
+    public static class Atributos {
+        public static final String ID = "id";
+        public static final String BASE64 = "base64";
+        public static final String CLIENTE = "cliente";
+    }
 }

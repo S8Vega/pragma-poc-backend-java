@@ -32,4 +32,10 @@ public class CiudadEntity implements Serializable {
     private String nombre;
     @OneToMany(mappedBy = "ciudadDeNacimiento", fetch = FetchType.LAZY)
     private List<ClienteEntity> clientes;
+
+    public static class Atributos {
+        public static final String ID = "id";
+        public static final String NOMBRE = "nombre";
+        public static final String CLIENTES = "clientes";
+    }
 }

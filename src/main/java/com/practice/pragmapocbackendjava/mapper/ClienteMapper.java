@@ -11,15 +11,14 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
 
-    @Mapping(target = ClienteDto.Atributos.NOMBRES, source = "cliente." + ClienteEntity.Atributos.NOMBRES)
-    @Mapping(target = ClienteDto.Atributos.APELLIDOS, source = "cliente." + ClienteEntity.Atributos.APELLIDOS)
-    @Mapping(target = ClienteDto.Atributos.TIPO_IDENTIFICACION, source = "identificacion." + IdentificacionEntity.Atributos.TIPO)
-    @Mapping(target = ClienteDto.Atributos.NUMERO_IDENTIFICACION, source = "identificacion." + IdentificacionEntity.Atributos.NUMERO)
-    @Mapping(target = ClienteDto.Atributos.EDAD, source = "cliente." + ClienteEntity.Atributos.EDAD)
-    @Mapping(target = ClienteDto.Atributos.CIUDAD_DE_NACIMIENTO, source = "ciudad." + CiudadEntity.Atributos.NOMBRE)
-    @Mapping(target = ClienteDto.Atributos.FOTO, source = "foto." + FotoEntity.Atributos.BASE64)
-    ClienteDto toClienteDto(CiudadEntity ciudad, ClienteEntity cliente,
-                            FotoEntity foto, IdentificacionEntity identificacion);
+    @Mapping(target = ClienteDto.Atributos.NOMBRES, source = ClienteEntity.Atributos.NOMBRES)
+    @Mapping(target = ClienteDto.Atributos.APELLIDOS, source = ClienteEntity.Atributos.APELLIDOS)
+    @Mapping(target = ClienteDto.Atributos.TIPO_IDENTIFICACION, source = ClienteEntity.Atributos.IDENTIFICACION + "." + IdentificacionEntity.Atributos.TIPO)
+    @Mapping(target = ClienteDto.Atributos.NUMERO_IDENTIFICACION, source = ClienteEntity.Atributos.IDENTIFICACION + "." + IdentificacionEntity.Atributos.NUMERO)
+    @Mapping(target = ClienteDto.Atributos.EDAD, source = ClienteEntity.Atributos.EDAD)
+    @Mapping(target = ClienteDto.Atributos.CIUDAD_DE_NACIMIENTO, source = ClienteEntity.Atributos.CIUDAD_DE_NACIMIENTO + "." + CiudadEntity.Atributos.NOMBRE)
+    @Mapping(target = ClienteDto.Atributos.FOTO, source = ClienteEntity.Atributos.FOTO + "." + FotoEntity.Atributos.BASE64)
+    ClienteDto toClienteDto(ClienteEntity cliente);
 
     @Mapping(target = ClienteEntity.Atributos.ID, ignore = true)
     @Mapping(target = ClienteEntity.Atributos.IDENTIFICACION, ignore = true)

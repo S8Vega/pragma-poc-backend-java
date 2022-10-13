@@ -5,6 +5,8 @@ import com.practice.pragmapocbackendjava.service.ClienteService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,14 @@ public class ClienteController {
     public ResponseEntity<ClienteDto> guardar(@RequestBody ClienteDto clienteDto) throws Exception {
         log.info("guardar");
         clienteService.guardar(clienteDto);
+        return ResponseEntity.ok(clienteDto);
+    }
+
+    @GetMapping("/identificacion/{tipo}/{numero}")
+    public ResponseEntity<ClienteDto> buscar(@PathVariable String tipo,
+                                             @PathVariable String numero) throws Exception {
+        log.info("buscar");
+        ClienteDto clienteDto = clienteService.buscar(tipo, numero);
         return ResponseEntity.ok(clienteDto);
     }
 }

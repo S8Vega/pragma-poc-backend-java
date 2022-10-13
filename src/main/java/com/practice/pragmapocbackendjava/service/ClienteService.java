@@ -17,4 +17,9 @@ public class ClienteService {
         log.info("guardar");
         clienteRepository.guardar(clienteDto);
     }
+
+    public ClienteDto buscar(String tipoDocumento, String numeroDocumento) {
+        log.info("buscar");
+        return clienteRepository.buscar(tipoDocumento, numeroDocumento);
+    }
 }

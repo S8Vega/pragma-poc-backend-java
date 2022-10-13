@@ -11,6 +11,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Log4j2
 @Repository
 public class ClienteRepository {
@@ -40,5 +42,15 @@ public class ClienteRepository {
 
         FotoEntity fotoEntity = clienteMapper.toFotoEntity(clienteDto, clienteEntity);
         fotoRepository.guardar(fotoEntity);
+    }
+
+    public ClienteDto buscar(String tipoDocumento, String numeroDocumento) {
+        Optional<IdentificacionEntity> identificacionEntity = identificacionRepository
+                .buscarPorTipoYNumero(tipoDocumento, numeroDocumento);
+        if (identificacionEntity.isEmpty()) {
+            throw new IllegalArgumentException("No existe documento");
+        }
+        ClienteEntity clienteEntity = identificacionEntity.get().getCliente();
+        return clienteMapper.toClienteDto(clienteEntity);
     }
 }

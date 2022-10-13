@@ -28,13 +28,17 @@ public class ClienteRepository {
 
     public void guardar(ClienteDto clienteDto) {
         log.info("Guardar clienteDto: " + clienteDto);
+
         CiudadEntity ciudadEntity = clienteMapper.toCiudadEntity(clienteDto);
-        ciudadRepository.guardar(ciudadEntity);
-        FotoEntity fotoEntity = clienteMapper.toFotoEntity(clienteDto);
-        fotoRepository.guardar(fotoEntity);
-        IdentificacionEntity identificacionEntity = clienteMapper.toIdentificacionEntity(clienteDto);
+        ciudadEntity = ciudadRepository.guardar(ciudadEntity);
+
+        ClienteEntity clienteEntity = clienteMapper.toClienteEntity(clienteDto, ciudadEntity);
+        clienteEntity = clienteDao.save(clienteEntity);
+
+        IdentificacionEntity identificacionEntity = clienteMapper.toIdentificacionEntity(clienteDto, clienteEntity);
         identificacionRepository.guardar(identificacionEntity);
-        ClienteEntity clienteEntity = clienteMapper.toClienteEntity(clienteDto);
-        clienteDao.save(clienteEntity);
+
+        FotoEntity fotoEntity = clienteMapper.toFotoEntity(clienteDto, clienteEntity);
+        fotoRepository.guardar(fotoEntity);
     }
 }

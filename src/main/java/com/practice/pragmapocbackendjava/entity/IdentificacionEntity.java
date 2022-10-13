@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
 
 @Data
@@ -19,7 +20,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "identificacion")
+@Table(name = "identificacion", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {IdentificacionEntity.Atributos.TIPO, IdentificacionEntity.Atributos.NUMERO})
+})
 public class IdentificacionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

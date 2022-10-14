@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,7 @@ public class FotoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String base64;
+    @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "cliente_id")
     private ClienteEntity cliente;

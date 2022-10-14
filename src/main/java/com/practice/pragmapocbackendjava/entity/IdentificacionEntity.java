@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,7 @@ public class IdentificacionEntity implements Serializable {
     private Long id;
     private String tipo;
     private String numero;
+    @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "cliente_id", unique = true)
     private ClienteEntity cliente;

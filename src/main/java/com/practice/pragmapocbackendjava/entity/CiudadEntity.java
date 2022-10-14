@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +33,7 @@ public class CiudadEntity implements Serializable {
     @NonNull
     @Column(unique = true)
     private String nombre;
+    @ToString.Exclude
     @OneToMany(mappedBy = "ciudadDeNacimiento", fetch = FetchType.LAZY)
     private List<ClienteEntity> clientes;
 

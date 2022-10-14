@@ -5,6 +5,7 @@ import com.practice.pragmapocbackendjava.service.ClienteService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,5 +40,12 @@ public class ClienteController {
     public ResponseEntity<ClienteDto> actualizar(@RequestBody ClienteDto clienteDto) throws Exception {
         log.info("actualizar");
         return ResponseEntity.ok(clienteService.actualizar(clienteDto));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<ClienteDto> eliminar(@RequestBody ClienteDto clienteDto) throws Exception {
+        log.info("eliminar");
+        clienteService.eliminar(clienteDto);
+        return ResponseEntity.ok(clienteDto);
     }
 }

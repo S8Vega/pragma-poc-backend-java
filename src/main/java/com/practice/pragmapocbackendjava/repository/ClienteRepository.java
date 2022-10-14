@@ -47,20 +47,21 @@ public class ClienteRepository {
     }
 
     public ClienteDto buscar(String tipoDocumento, String numeroDocumento) {
+        ClienteEntity clienteEntity = buscarEntity(tipoDocumento, numeroDocumento);
+        return clienteMapper.toClienteDto(clienteEntity);
+    }
+
+    private ClienteEntity buscarEntity(String tipoDocumento, String numeroDocumento) {
         Optional<ClienteEntity> clienteEntity = clienteDao.findByIdentificacion(tipoDocumento, numeroDocumento);
         if (clienteEntity.isEmpty()) {
             throw new IllegalArgumentException("El documento no existe");
         }
-        return clienteMapper.toClienteDto(clienteEntity.get());
+        return clienteEntity.get();
     }
 
     public ClienteDto actualizar(ClienteDto clienteDto) {
-        Optional<ClienteEntity> optionalClienteEntity = clienteDao.findByIdentificacion(
-                clienteDto.getTipoIdentificacion(), clienteDto.getNumeroIdentificacion());
-        if (optionalClienteEntity.isEmpty()) {
-            throw new IllegalArgumentException("El documento no existe");
-        }
-        ClienteEntity clienteEntity = optionalClienteEntity.get();
+        ClienteEntity clienteEntity = buscarEntity(clienteDto.getTipoIdentificacion(),
+                clienteDto.getNumeroIdentificacion());
         clienteEntity.setNombres(clienteDto.getNombres());
         clienteEntity.setApellidos(clienteDto.getApellidos());
         clienteEntity.setEdad(clienteDto.getEdad());
@@ -68,5 +69,13 @@ public class ClienteRepository {
         clienteEntity.getFoto().setBase64(clienteDto.getFoto());
         clienteDao.save(clienteEntity);
         return buscar(clienteDto.getTipoIdentificacion(), clienteDto.getNumeroIdentificacion());
+    }
+
+    public void eliminar(ClienteDto clienteDto) {
+        ClienteEntity clienteEntity = buscarEntity(clienteDto.getTipoIdentificacion(),
+                clienteDto.getNumeroIdentificacion());
+        identificacionRepository.eliminar(clienteEntity.getIdentificacion());
+        fotoRepository.eliminar(clienteEntity.getFoto());
+        clienteDao.delete(clienteEntity);
     }
 }

@@ -27,4 +27,9 @@ public class IdentificacionRepository {
     public Optional<IdentificacionEntity> buscarPorTipoYNumero(String tipo, String numero) {
         return identificacionDao.findByTipoAndNumero(tipo, numero);
     }
+
+    public void eliminar(IdentificacionEntity identificacionEntity) {
+        log.info("eliminar");
+        identificacionDao.delete(identificacionEntity);
+    }
 }

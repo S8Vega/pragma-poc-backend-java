@@ -27,4 +27,10 @@ public class ClienteService {
         log.info("actualizar");
         return clienteRepository.actualizar(clienteDto);
     }
+
+    public void eliminar(ClienteDto clienteDto) {
+        log.info("eliminar");
+        clienteRepository.eliminar(clienteDto);
+    }
+
 }

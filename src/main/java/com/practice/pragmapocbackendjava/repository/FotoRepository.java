@@ -16,4 +16,9 @@ public class FotoRepository {
         log.info("Guardar fotoEntity: " + fotoEntity);
         fotoDao.save(fotoEntity);
     }
+
+    public void eliminar(FotoEntity fotoEntity) {
+        log.info("Eliminar");
+        fotoDao.delete(fotoEntity);
+    }
 }

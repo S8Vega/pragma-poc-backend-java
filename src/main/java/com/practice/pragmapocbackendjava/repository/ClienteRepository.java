@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Log4j2
@@ -57,6 +58,15 @@ public class ClienteRepository {
             throw new IllegalArgumentException("El documento no existe");
         }
         return clienteEntity.get();
+    }
+
+    public List<ClienteDto> buscarPorEdadMayorIgual(int edad) {
+        log.info("buscarPorEdadMayorIgual");
+        Optional<List<ClienteEntity>> optionalClienteEntities = clienteDao.findByEdadGreaterThanEqual(edad);
+        if (optionalClienteEntities.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return clienteMapper.toClienteDto(optionalClienteEntities.get());
     }
 
     public ClienteDto actualizar(ClienteDto clienteDto) {

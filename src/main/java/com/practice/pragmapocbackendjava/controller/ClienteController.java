@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Log4j2
 @RestController
 @RequestMapping("/cliente")
@@ -34,6 +36,12 @@ public class ClienteController {
         log.info("buscar");
         ClienteDto clienteDto = clienteService.buscar(tipo, numero);
         return ResponseEntity.ok(clienteDto);
+    }
+
+    @GetMapping("/edad/{edad}")
+    public ResponseEntity<List<ClienteDto>> buscarPorEdadMayorIgual(@PathVariable int edad) throws Exception {
+        log.info("buscarPorEdadMayorIgual");
+        return ResponseEntity.ok(clienteService.buscarPorEdadMayorIgual(edad));
     }
 
     @PutMapping

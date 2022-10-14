@@ -6,6 +6,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Log4j2
 @Service
 public class ClienteService {
@@ -21,6 +23,11 @@ public class ClienteService {
     public ClienteDto buscar(String tipoDocumento, String numeroDocumento) {
         log.info("buscar");
         return clienteRepository.buscar(tipoDocumento, numeroDocumento);
+    }
+
+    public List<ClienteDto> buscarPorEdadMayorIgual(int edad) {
+        log.info("buscarPorEdadMayorIgual");
+        return clienteRepository.buscarPorEdadMayorIgual(edad);
     }
 
     public ClienteDto actualizar(ClienteDto clienteDto) {

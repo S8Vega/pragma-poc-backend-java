@@ -8,6 +8,8 @@ import com.practice.pragmapocbackendjava.entity.IdentificacionEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
 
@@ -19,6 +21,8 @@ public interface ClienteMapper {
     @Mapping(target = ClienteDto.Atributos.CIUDAD_DE_NACIMIENTO, source = ClienteEntity.Atributos.CIUDAD_DE_NACIMIENTO + "." + CiudadEntity.Atributos.NOMBRE)
     @Mapping(target = ClienteDto.Atributos.FOTO, source = ClienteEntity.Atributos.FOTO + "." + FotoEntity.Atributos.BASE64)
     ClienteDto toClienteDto(ClienteEntity cliente);
+
+    List<ClienteDto> toClienteDto(List<ClienteEntity> cliente);
 
     @Mapping(target = ClienteEntity.Atributos.ID, ignore = true)
     @Mapping(target = ClienteEntity.Atributos.IDENTIFICACION, ignore = true)

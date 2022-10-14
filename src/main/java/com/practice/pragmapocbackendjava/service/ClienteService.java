@@ -13,13 +13,18 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public void guardar(ClienteDto clienteDto) {
+    public ClienteDto guardar(ClienteDto clienteDto) {
         log.info("guardar");
-        clienteRepository.guardar(clienteDto);
+        return clienteRepository.guardar(clienteDto);
     }
 
     public ClienteDto buscar(String tipoDocumento, String numeroDocumento) {
         log.info("buscar");
         return clienteRepository.buscar(tipoDocumento, numeroDocumento);
+    }
+
+    public ClienteDto actualizar(ClienteDto clienteDto) {
+        log.info("actualizar");
+        return clienteRepository.actualizar(clienteDto);
     }
 }

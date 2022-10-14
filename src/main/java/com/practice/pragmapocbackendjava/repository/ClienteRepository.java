@@ -28,7 +28,7 @@ public class ClienteRepository {
     @Autowired
     private ClienteMapper clienteMapper;
 
-    public void guardar(ClienteDto clienteDto) {
+    public ClienteDto guardar(ClienteDto clienteDto) {
         log.info("Guardar clienteDto: " + clienteDto);
 
         CiudadEntity ciudadEntity = clienteMapper.toCiudadEntity(clienteDto);
@@ -42,15 +42,31 @@ public class ClienteRepository {
 
         FotoEntity fotoEntity = clienteMapper.toFotoEntity(clienteDto, clienteEntity);
         fotoRepository.guardar(fotoEntity);
+
+        return clienteDto;
     }
 
     public ClienteDto buscar(String tipoDocumento, String numeroDocumento) {
-        Optional<IdentificacionEntity> identificacionEntity = identificacionRepository
-                .buscarPorTipoYNumero(tipoDocumento, numeroDocumento);
-        if (identificacionEntity.isEmpty()) {
-            throw new IllegalArgumentException("No existe documento");
+        Optional<ClienteEntity> clienteEntity = clienteDao.findByIdentificacion(tipoDocumento, numeroDocumento);
+        if (clienteEntity.isEmpty()) {
+            throw new IllegalArgumentException("El documento no existe");
         }
-        ClienteEntity clienteEntity = identificacionEntity.get().getCliente();
-        return clienteMapper.toClienteDto(clienteEntity);
+        return clienteMapper.toClienteDto(clienteEntity.get());
+    }
+
+    public ClienteDto actualizar(ClienteDto clienteDto) {
+        Optional<ClienteEntity> optionalClienteEntity = clienteDao.findByIdentificacion(
+                clienteDto.getTipoIdentificacion(), clienteDto.getNumeroIdentificacion());
+        if (optionalClienteEntity.isEmpty()) {
+            throw new IllegalArgumentException("El documento no existe");
+        }
+        ClienteEntity clienteEntity = optionalClienteEntity.get();
+        clienteEntity.setNombres(clienteDto.getNombres());
+        clienteEntity.setApellidos(clienteDto.getApellidos());
+        clienteEntity.setEdad(clienteDto.getEdad());
+        clienteEntity.getCiudadDeNacimiento().setNombre(clienteDto.getCiudadDeNacimiento());
+        clienteEntity.getFoto().setBase64(clienteDto.getFoto());
+        clienteDao.save(clienteEntity);
+        return buscar(clienteDto.getTipoIdentificacion(), clienteDto.getNumeroIdentificacion());
     }
 }

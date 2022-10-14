@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,7 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<ClienteDto> guardar(@RequestBody ClienteDto clienteDto) throws Exception {
         log.info("guardar");
-        clienteService.guardar(clienteDto);
-        return ResponseEntity.ok(clienteDto);
+        return ResponseEntity.ok(clienteService.guardar(clienteDto));
     }
 
     @GetMapping("/identificacion/{tipo}/{numero}")
@@ -33,5 +33,11 @@ public class ClienteController {
         log.info("buscar");
         ClienteDto clienteDto = clienteService.buscar(tipo, numero);
         return ResponseEntity.ok(clienteDto);
+    }
+
+    @PutMapping
+    public ResponseEntity<ClienteDto> actualizar(@RequestBody ClienteDto clienteDto) throws Exception {
+        log.info("actualizar");
+        return ResponseEntity.ok(clienteService.actualizar(clienteDto));
     }
 }
